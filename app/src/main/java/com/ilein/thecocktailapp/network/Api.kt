@@ -1,5 +1,6 @@
 package com.ilein.thecocktailapp.network
 
+import com.ilein.thecocktailapp.BuildConfig
 import com.ilein.thecocktailapp.network.model.Drinks
 import io.ktor.client.*
 import io.ktor.client.features.json.*
@@ -8,9 +9,9 @@ import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 
 class Api {
-    private val baseUrl = "thecocktaildb.com"
-    private val drinks = "api/json/v1/1/search.php"
-    private val drink = "api/json/v1/1/lookup.php"
+    private val baseUrl = BuildConfig.API_BASE_URL
+    private val drinks = "api/json/${BuildConfig.API_VERSION}/${BuildConfig.API_KEY}/search.php"
+    private val drink = "api/json/${BuildConfig.API_VERSION}/${BuildConfig.API_KEY}/lookup.php"
 
 
     private val ktorClient = HttpClient() {

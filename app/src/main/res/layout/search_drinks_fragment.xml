@@ -58,7 +58,7 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:padding="8dp"
-                android:text="No Data. Try to type something!"
+                android:text="No Data! Try to type something (for example: margarita)!"
                 android:textStyle="bold" />
 
         </LinearLayout>

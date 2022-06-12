@@ -56,6 +56,8 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
                     drinksReq.requestDrinks(query)
                         .onStart { updateState {
                             it.copy(loading = true) } }
+                        .onEmpty { updateState {
+                            it.copy(loading = false) } }
                         .onCompletion { updateState {
                             it.copy(loading = false) } }
             }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.ilein.thecocktailapp.ui.main.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_searchDrinksFragment"
+            app:destination="@id/searchDrinksFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_likedDrinksFragment"
+            app:destination="@id/likedDrinksFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchDrinksFragment"
+        android:name="com.ilein.thecocktailapp.ui.search.SearchDrinksFragment"
+        android:label="search_drinks_fragment"
+        tools:layout="@layout/search_drinks_fragment" >
+        <action
+            android:id="@+id/toDrinkDetailWithParam"
+            app:destination="@id/drinkItemDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/drinkItemDetailFragment"
+        android:name="com.ilein.thecocktailapp.ui.detail.DrinkItemDetailFragment"
+        android:label="fragment_drink_item_detail"
+        tools:layout="@layout/fragment_drink_item_detail" >
+        <argument
+            android:name="drinkId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/likedDrinksFragment"
+        android:name="com.ilein.thecocktailapp.ui.liked.LikedDrinksFragment"
+        android:label="liked_drinks_fragment"
+        tools:layout="@layout/liked_drinks_fragment" >
+        <action
+            android:id="@+id/toDrinkLikeDetailWithParam"
+            app:destination="@id/drinkLikeItemDetailFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/drinkLikeItemDetailFragment3"
+        android:name="com.ilein.thecocktailapp.ui.detail.DrinkLikeItemDetailFragment"
+        android:label="fragment_drink_like_item_detail"
+        tools:layout="@layout/fragment_drink_like_item_detail" >
+        <argument
+            android:name="drinkId"
+            app:argType="integer" />
+    </fragment>
+</navigation>

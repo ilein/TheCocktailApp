@@ -45,6 +45,7 @@ class DrinkItemDetailFragment : Fragment() {
                 action = Intent.ACTION_SEND
                 putExtra(
                     Intent.EXTRA_TEXT, "Hi! Try this:" +
+                        "\n${binding.poster.contentDescription}" +
                         "\n${binding.drinkTitle.text}" +
                         "\n${binding.ingredients.text}" +
                         "\n${binding.instructions.text}")
@@ -73,6 +74,7 @@ class DrinkItemDetailFragment : Fragment() {
         binding.loading.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
 
         state.item?.let {
+            binding.poster.contentDescription = it.drink.strDrinkThumb
             binding.poster.load("${it.drink.strDrinkThumb}") {
                 transformations(RoundedCornersTransformation(16f))
             }

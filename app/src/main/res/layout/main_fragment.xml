@@ -14,14 +14,13 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvAppName"
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="20dp"
-            android:gravity="center"
-            android:text="TheCocktailDB"
-            android:textSize="34sp" />
+            android:src="@drawable/logo" />
 
         <Button
             android:id="@+id/btnGoToSearch"

@@ -33,6 +33,9 @@
             android:layout_height="300dp"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
+            android:clickable="false"
+            android:focusable="auto"
+            android:focusableInTouchMode="false"
             tools:src="@tools:sample/avatars" />
 
         <ScrollView

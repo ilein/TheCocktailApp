@@ -52,7 +52,7 @@ internal class LikedDrinkItemAdapter (private val onItemClick: (DrinkLikeEntity)
             val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")
             updateDate.text = "Added: ${item.createDate?.format(formatter) ?: ""}"
             //like.isChecked = item.like ?: false
-            image.load("${item.image}") {
+            image.load("${item.image}/preview") {
                 transformations(RoundedCornersTransformation(16f))
             }
         }

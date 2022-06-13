@@ -45,7 +45,7 @@ internal class DrinkItemAdapter(private val onItemClick: (Drink) -> Unit,
             }
             title.text = item.drink.strDrink
             like.isChecked = item.like ?: false
-            image.load("${item.drink.strDrinkThumb}") {
+            image.load("${item.drink.strDrinkThumb}/preview") {
                 transformations(RoundedCornersTransformation(16f))
             }
         }

@@ -61,8 +61,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
                     android:gravity="clip_horizontal|center_horizontal|left"
-                    android:text="Ingredients:"
+                    android:text="@string/ingredient_label_down"
                     android:textColor="#2196F3"
                     android:textSize="25sp" />
 
@@ -82,8 +85,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
                     android:gravity="clip_horizontal|center_horizontal|left"
-                    android:text="Instructions:"
+                    android:text="@string/instructions_label_down"
                     android:textSize="25sp" />
 
                 <TextView

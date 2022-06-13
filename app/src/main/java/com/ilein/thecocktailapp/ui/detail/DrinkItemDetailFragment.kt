@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.ilein.thecocktailapp.R
 import com.ilein.thecocktailapp.databinding.FragmentDrinkItemDetailBinding
 import com.ilein.thecocktailapp.ui.state.DrinkItemState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -52,6 +53,18 @@ class DrinkItemDetailFragment : Fragment() {
 
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
+        }
+
+        binding.twLabelIngredients.setOnClickListener {
+            binding.ingredients.visibility = if (binding.ingredients.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.twLabelIngredients.text = if (binding.ingredients.visibility == View.VISIBLE) getString(R.string.ingredient_label_down) else
+                getString(R.string.ingredient_label_up)
+        }
+
+        binding.twLabelInstructions.setOnClickListener {
+            binding.instructions.visibility = if (binding.instructions.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.twLabelInstructions.text = if (binding.instructions.visibility == View.VISIBLE) getString(R.string.instructions_label_down) else
+                getString(R.string.instructions_label_up)
         }
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -61,8 +62,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
                     android:gravity="clip_horizontal|center_horizontal|left"
-                    android:text="Ingredients:"
+                    android:text="@string/ingredient_label_down"
                     android:textColor="#2196F3"
                     android:textSize="25sp" />
 
@@ -82,8 +86,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:clickable="true"
+                    android:focusable="auto"
+                    android:focusableInTouchMode="true"
                     android:gravity="clip_horizontal|center_horizontal|left"
-                    android:text="Instructions:"
+                    android:text="@string/instructions_label_down"
                     android:textSize="25sp" />
 
                 <TextView
@@ -97,16 +104,50 @@
                     android:textSize="20sp"
                     tools:text="@tools:sample/lorem/random" />
 
-                <ImageButton
-                    android:id="@+id/ibSend_like"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tiDrinkLikeNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter your note for this coctail"
+                        android:lines="3" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@android:color/transparent"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/telegram_logo" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/ibSave"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="25dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/save" />
+
+                    <ImageButton
+                        android:id="@+id/ibSend_like"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/telegram_logo" />
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 

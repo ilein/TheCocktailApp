@@ -22,7 +22,7 @@ class LikedDrinksViewModel(private val drinkLikeDao: DrinkLikeDao) : ViewModel()
 
     private fun initData() {
         compositeDisposable.add(
-            drinkLikeDao.observeDrinkLike()
+            drinkLikeDao.observeDrinkLikeDesc()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.single())
                 .doOnSubscribe { _liveData.postValue(DrinksLikeState(

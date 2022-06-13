@@ -16,6 +16,9 @@ abstract class DrinkLikeDao {
     @Query("SELECT * FROM drink_like")
     abstract fun observeDrinkLike(): Observable<List<DrinkLikeEntity>>
 
+    @Query("SELECT * FROM drink_like order by update_date desc")
+    abstract fun observeDrinkLikeDesc(): Observable<List<DrinkLikeEntity>>
+
     @Query("SELECT * FROM drink_like WHERE id = :drinkId")
     abstract fun getDrinkLike(drinkId: Int): Maybe<DrinkLikeEntity>
 

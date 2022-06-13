@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.ilein.thecocktailapp.R
 import com.ilein.thecocktailapp.databinding.FragmentDrinkLikeItemDetailBinding
 import com.ilein.thecocktailapp.ui.state.DrinkItemLikeState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -54,6 +57,19 @@ class DrinkLikeItemDetailFragment : Fragment() {
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
         }
+
+        binding.twLabelIngredientsLike.setOnClickListener {
+            binding.ingredientsLike.visibility = if (binding.ingredientsLike.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.twLabelIngredientsLike.text = if (binding.ingredientsLike.visibility == View.VISIBLE) getString(
+                R.string.ingredient_label_down) else
+                getString(R.string.ingredient_label_up)
+        }
+
+        binding.twLabelInstructionsLike.setOnClickListener {
+            binding.instructionsLike.visibility = if (binding.instructionsLike.visibility == View.VISIBLE) View.GONE else View.VISIBLE
+            binding.twLabelInstructionsLike.text = if (binding.instructionsLike.visibility == View.VISIBLE) getString(R.string.instructions_label_down) else
+                getString(R.string.instructions_label_up)
+        }
     }
 
     private fun handleState(state: DrinkItemLikeState) {
@@ -67,6 +83,16 @@ class DrinkLikeItemDetailFragment : Fragment() {
             binding.drinkTitleLike.text = state.drink.strDrink
             binding.instructionsLike.text = state.drink.strInstructions
             binding.ingredientsLike.text = state.drink.getIngredientsText()
+        }
+        state.drinkLike?.let {
+            binding.tiDrinkLikeNote.setText(state.drinkLike.note)
+        }
+        binding.tiDrinkLikeNote.text?.let { binding.tiDrinkLikeNote.setSelection(it.length) }
+        binding.tiDrinkLikeNote.doOnTextChanged { text, _, _, _ -> vm.onNoteChange(text.toString()) }
+        binding.ibSave.setOnClickListener {
+            vm.onSaveClick()
+            val toast = Toast.makeText(context, "Saved!", Toast.LENGTH_LONG)
+            toast.show()
         }
     }
 

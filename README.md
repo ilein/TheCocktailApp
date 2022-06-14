@@ -15,3 +15,16 @@ MVI
 - Coil  
 - Android Navigation Component  
 
+## Внешний вид
+Поиск и список: 
+<p float="left">
+  <img src="https://github.com/ilein/TheCoctailApp/blob/master/scr/scr1.jpg" width="30%" height="30%"/>
+  <img src="https://github.com/ilein/TheCoctailApp/blob/master/scr/scr2.jpg" width="30%" height="30%"/>
+  <img src="https://github.com/ilein/TheCoctailApp/blob/master/scr/scr3.jpg" width="30%" height="30%"/>
+</p>
+
+Карточки: 
+<p float="left">
+  <img src="https://github.com/ilein/TheCoctailApp/blob/master/scr/scr4.jpg" width="30%" height="30%"/>
+  <img src="https://github.com/ilein/TheCoctailApp/blob/master/scr/scr5.jpg" width="30%" height="30%"/>
+</p>

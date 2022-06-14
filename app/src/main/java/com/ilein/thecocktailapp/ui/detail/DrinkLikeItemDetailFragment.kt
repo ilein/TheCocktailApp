@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.google.android.material.button.MaterialButton
 import com.ilein.thecocktailapp.R
 import com.ilein.thecocktailapp.databinding.FragmentDrinkLikeItemDetailBinding
 import com.ilein.thecocktailapp.ui.state.DrinkItemLikeState
@@ -59,18 +60,26 @@ class DrinkLikeItemDetailFragment : Fragment() {
             startActivity(shareIntent)
         }
 
-        binding.twLabelIngredientsLike.setOnClickListener {
-            binding.ingredientsLike.visibility = if (binding.ingredientsLike.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-            binding.twLabelIngredientsLike.text = if (binding.ingredientsLike.visibility == View.VISIBLE) getString(
-                R.string.ingredient_label_down) else
-                getString(R.string.ingredient_label_up)
+        binding.btnExpandIngredientsLike.setOnClickListener {
+            if (binding.ingredientsLike.visibility == View.VISIBLE) {
+                binding.ingredientsLike.visibility = View.GONE
+                (binding.btnExpandIngredientsLike as MaterialButton).setIconResource(R.drawable.ic_expand_less)
+            } else {
+                binding.ingredientsLike.visibility = View.VISIBLE
+                (binding.btnExpandIngredientsLike as MaterialButton).setIconResource(R.drawable.ic_expand_more)
+            }
         }
 
-        binding.twLabelInstructionsLike.setOnClickListener {
-            binding.instructionsLike.visibility = if (binding.instructionsLike.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-            binding.twLabelInstructionsLike.text = if (binding.instructionsLike.visibility == View.VISIBLE) getString(R.string.instructions_label_down) else
-                getString(R.string.instructions_label_up)
+        binding.btnExpandInstructionsLike.setOnClickListener {
+            if (binding.instructionsLike.visibility == View.VISIBLE) {
+                binding.instructionsLike.visibility = View.GONE
+                (binding.btnExpandInstructionsLike as MaterialButton).setIconResource(R.drawable.ic_expand_less)
+            } else {
+                binding.instructionsLike.visibility = View.VISIBLE
+                (binding.btnExpandInstructionsLike as MaterialButton).setIconResource(R.drawable.ic_expand_more)
+            }
         }
+
     }
 
     private fun handleState(state: DrinkItemLikeState) {

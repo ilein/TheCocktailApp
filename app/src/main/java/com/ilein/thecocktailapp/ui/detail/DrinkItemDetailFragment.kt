@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
 import coil.transform.RoundedCornersTransformation
+import com.google.android.material.button.MaterialButton
 import com.ilein.thecocktailapp.R
 import com.ilein.thecocktailapp.databinding.FragmentDrinkItemDetailBinding
 import com.ilein.thecocktailapp.ui.state.DrinkItemState
@@ -56,16 +57,24 @@ class DrinkItemDetailFragment : Fragment() {
             startActivity(shareIntent)
         }
 
-        binding.twLabelIngredients.setOnClickListener {
-            binding.ingredients.visibility = if (binding.ingredients.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-            binding.twLabelIngredients.text = if (binding.ingredients.visibility == View.VISIBLE) getString(R.string.ingredient_label_down) else
-                getString(R.string.ingredient_label_up)
+        binding.btnExpandIngredients.setOnClickListener {
+            if (binding.ingredients.visibility == View.VISIBLE) {
+                binding.ingredients.visibility = View.GONE
+                (binding.btnExpandIngredients as MaterialButton).setIconResource(R.drawable.ic_expand_less)
+            } else {
+                binding.ingredients.visibility = View.VISIBLE
+                (binding.btnExpandIngredients as MaterialButton).setIconResource(R.drawable.ic_expand_more)
+            }
         }
 
-        binding.twLabelInstructions.setOnClickListener {
-            binding.instructions.visibility = if (binding.instructions.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-            binding.twLabelInstructions.text = if (binding.instructions.visibility == View.VISIBLE) getString(R.string.instructions_label_down) else
-                getString(R.string.instructions_label_up)
+        binding.btnExpandInstructions.setOnClickListener {
+            if (binding.instructions.visibility == View.VISIBLE) {
+                binding.instructions.visibility = View.GONE
+                (binding.btnExpandInstructions as MaterialButton).setIconResource(R.drawable.ic_expand_less)
+            } else {
+                binding.instructions.visibility = View.VISIBLE
+                (binding.btnExpandInstructions as MaterialButton).setIconResource(R.drawable.ic_expand_more)
+            }
         }
     }
 

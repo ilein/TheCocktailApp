@@ -24,15 +24,23 @@
 
         <Button
             android:id="@+id/btnGoToSearch"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Go to Search" />
+            android:text="Search"
+            app:icon="@drawable/ic_search"
+            app:iconGravity="textStart"
+            app:iconSize="40dp" />
 
         <Button
             android:id="@+id/btnGoToLikedDrinks"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Liked Drinks" />
+            android:text="Saved"
+            app:icon="@drawable/ic_favorite"
+            app:iconGravity="textStart"
+            app:iconSize="40dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

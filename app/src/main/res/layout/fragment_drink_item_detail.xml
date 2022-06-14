@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -48,8 +49,9 @@
                 android:layout_margin="8dp"
                 android:orientation="vertical">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/drinkTitle"
+                    style="@style/TextAppearance.Material3.HeadlineLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
@@ -59,63 +61,55 @@
                     android:textStyle="bold"
                     tools:text="@tools:sample/lorem/random" />
 
-                <TextView
-                    android:id="@+id/twLabelIngredients"
+                <Button
+                    android:id="@+id/btnExpandIngredients"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:clickable="true"
-                    android:focusable="auto"
-                    android:focusableInTouchMode="true"
-                    android:gravity="clip_horizontal|center_horizontal|left"
-                    android:text="@string/ingredient_label_down"
-                    android:textColor="#2196F3"
-                    android:textSize="25sp" />
+                    android:tag="0"
+                    android:text="@string/ingredient_label"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_expand_more" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/ingredients"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:gravity="clip_horizontal|center_horizontal|left"
                     android:maxLines="10"
-                    android:textColor="#2196F3"
                     android:textSize="20sp"
                     tools:text="@tools:sample/lorem/random" />
 
-                <TextView
-                    android:id="@+id/twLabelInstructions"
+                <Button
+                    android:id="@+id/btnExpandInstructions"
+                    style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:clickable="true"
-                    android:focusable="auto"
-                    android:focusableInTouchMode="true"
-                    android:gravity="clip_horizontal|center_horizontal|left"
-                    android:text="@string/instructions_label_down"
-                    android:textSize="25sp" />
+                    android:tag="0"
+                    android:text="@string/instructions_label"
+                    android:textAlignment="viewStart"
+                    app:icon="@drawable/ic_expand_more" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/instructions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:ellipsize="end"
                     android:gravity="clip_horizontal|center_horizontal|left"
                     android:maxLines="15"
                     android:textSize="20sp"
                     tools:text="@tools:sample/lorem/random" />
 
-                <ImageButton
+                <Button
                     android:id="@+id/ibSend"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@android:color/transparent"
+                    android:layout_margin="10dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/telegram_logo" />
+                    android:text="Send"
+                    app:icon="@drawable/ic_send" />
             </LinearLayout>
         </ScrollView>
 

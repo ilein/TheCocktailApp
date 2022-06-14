@@ -27,7 +27,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search"
+            android:text="@string/search"
             app:icon="@drawable/ic_search"
             app:iconGravity="textStart"
             app:iconSize="40dp" />
@@ -37,8 +37,19 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Saved"
+            android:text="@string/saved"
             app:icon="@drawable/ic_favorite"
+            app:iconGravity="textStart"
+            app:iconSize="40dp" />
+
+        <Button
+            android:id="@+id/btnGoToMap"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/map"
+            android:visibility="invisible"
+            app:icon="@drawable/ic_map"
             app:iconGravity="textStart"
             app:iconSize="40dp" />
     </LinearLayout>

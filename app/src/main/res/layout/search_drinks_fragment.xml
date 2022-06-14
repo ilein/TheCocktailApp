@@ -5,20 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.search.SearchDrinksFragment">
 
-    <FrameLayout
-        android:id="@+id/loadingDrinks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:indeterminate="true" />
-    </FrameLayout>
-
     <LinearLayout
         android:id="@+id/lCardDrinks"
         android:layout_width="match_parent"
@@ -42,7 +28,7 @@
                     android:layout_width="match_parent"
 
                     android:layout_height="wrap_content"
-                    android:hint="Search Drink">
+                    android:hint="@string/search_drink">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_drink"
@@ -60,16 +46,23 @@
                 android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:padding="8dp"
-                android:text="No Data! Try to type something (for example: margarita)!"
+                android:text="@string/no_data"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/lCardDrinksRecycler"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_drink" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lCardDrinksRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/item_drink" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 </FrameLayout>

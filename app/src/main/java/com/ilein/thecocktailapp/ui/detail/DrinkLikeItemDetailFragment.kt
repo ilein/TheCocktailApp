@@ -44,6 +44,8 @@ class DrinkLikeItemDetailFragment : Fragment() {
         vm.state.observe(requireActivity()) {state -> handleState(state) }
         vm.init(drinkId)
 
+        binding.swipeRefresh.setOnRefreshListener { vm.onRefresh(drinkId) }
+
         binding.ibSendLike.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -83,17 +85,22 @@ class DrinkLikeItemDetailFragment : Fragment() {
     }
 
     private fun handleState(state: DrinkItemLikeState) {
-        binding.lCardItemLike.visibility = if (state.loading) View.INVISIBLE else View.VISIBLE
-        binding.loadingLike.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
+        binding.lCardItemLike.visibility = if (state.loading || !state.isOnline) View.INVISIBLE else View.VISIBLE
+        binding.swipeRefresh.isRefreshing = state.loading
 
-        state.drink?.let {
-            binding.posterLike.contentDescription = state.drink.strDrinkThumb
-            binding.posterLike.load("${state.drink.strDrinkThumb}") {
-                transformations(RoundedCornersTransformation(16f))
+        if (state.isOnline) {
+            state.drink?.let {
+                binding.posterLike.contentDescription = state.drink.strDrinkThumb
+                binding.posterLike.load("${state.drink.strDrinkThumb}") {
+                    transformations(RoundedCornersTransformation(16f))
+                }
+                binding.drinkTitleLike.text = state.drink.strDrink
+                binding.instructionsLike.text = state.drink.strInstructions
+                binding.ingredientsLike.text = state.drink.getIngredientsText()
             }
-            binding.drinkTitleLike.text = state.drink.strDrink
-            binding.instructionsLike.text = state.drink.strInstructions
-            binding.ingredientsLike.text = state.drink.getIngredientsText()
+        } else {
+            val toast = Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG)
+            toast.show()
         }
         state.drinkLike?.let {
             binding.tiDrinkLikeNote.setText(state.drinkLike.note)

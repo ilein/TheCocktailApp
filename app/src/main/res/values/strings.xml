@@ -1,7 +1,16 @@
 <resources>
     <string name="app_name">TheCocktailApp</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ingredient_label">Ingredients</string>
     <string name="instructions_label">Instructions</string>
+    <string name="search_drink">Search Drink</string>
+    <string name="no_data">No Data! Try to type something (for example: margarita)!</string>
+    <string name="no_connection">No Internet Connection!!!</string>
+
+    <string name="search">Search</string>
+    <string name="saved">Saved</string>
+    <string name="map">Nearest Pub</string>
+    <string name="save">Save</string>
+    <string name="send">Send</string>
+    <string name="note_hint">Enter your note for this cocktail</string>
 </resources>

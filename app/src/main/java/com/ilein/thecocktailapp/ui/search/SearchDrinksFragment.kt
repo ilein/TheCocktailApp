@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.fragment.findNavController
@@ -32,7 +33,7 @@ class SearchDrinksFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.lCardDrinksRecycler.visibility = View.VISIBLE
-        binding.loadingDrinks.visibility = View.INVISIBLE
+        //binding.loadingDrinks.visibility = View.INVISIBLE
 
         val drinksAdapter = DrinkItemAdapter ({
             findNavController().navigate(SearchDrinksFragmentDirections.toDrinkDetailWithParam(it.idDrink))
@@ -44,13 +45,26 @@ class SearchDrinksFragment : Fragment() {
 
         vm.state.observe(requireActivity()) {state ->
             run {
-                binding.lCardDrinksRecycler.visibility = if (state.loading) View.INVISIBLE else View.VISIBLE
-                binding.loadingDrinks.visibility =
-                    if (state.loading) View.VISIBLE else View.INVISIBLE
-                binding.twHint.visibility = if (state.itemsMap.isNotEmpty()) View.GONE else View.VISIBLE
-                drinksAdapter.setItems(state.itemsMap)
+                binding.lCardDrinksRecycler.visibility =
+                    if (state.loading) View.INVISIBLE else View.VISIBLE
+                //binding.loadingDrinks.visibility =
+                //    if (state.loading) View.VISIBLE else View.INVISIBLE
+                binding.twHint.visibility =
+                    if (state.itemsMap.isNotEmpty()) View.GONE else View.VISIBLE
+
+                binding.swipeRefresh.isRefreshing = state.loading
+
+                if (state.isOnline) {
+                    drinksAdapter.setItems(state.itemsMap)
+                } else {
+                    val toast = Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG)
+                    toast.show()
+                }
+
             }
         }
+
+        binding.swipeRefresh.setOnRefreshListener { vm.onRefresh() }
 
         binding.lCardDrinksRecycler.adapter = drinksAdapter
         binding.lCardDrinksRecycler.layoutManager = LinearLayoutManager(requireActivity())

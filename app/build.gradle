@@ -114,5 +114,9 @@ dependencies {
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
     testImplementation "org.mockito:mockito-inline:4.5.1"
 
-    
+    // map
+    implementation "org.osmdroid:osmdroid-android:6.1.13"
+
+    implementation 'com.google.android.gms:play-services-location:17.1.0'
+
 }

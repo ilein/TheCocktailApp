@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ilein.thecocktailapp.db.DrinkLikeDao
 import com.ilein.thecocktailapp.network.DrinksReq
+import com.ilein.thecocktailapp.network.NetworkUtil
 import com.ilein.thecocktailapp.ui.state.DrinkItemLikeState
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -13,27 +14,37 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 
 class DrinkLikeItemDetailViewModel(private val drinkLikeDao: DrinkLikeDao,
-                                   private val drinksReq: DrinksReq): ViewModel() {
+                                   private val drinksReq: DrinksReq,
+                                   private val networkUtil: NetworkUtil
+): ViewModel() {
     val state = MutableLiveData<DrinkItemLikeState>()
 
     private val compositeDisposable = CompositeDisposable()
 
     fun init(drinkId: Int) {
-        drinksReq.requestDrink(drinkId)
-            .onStart { state.postValue(DrinkItemLikeState(null, null, true)) }
-            .onEach { drinks ->
-                run {
-                    val drink = drinks.results[0]
-                    drinkLikeDao.getDrinkLike(drinkId)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(Schedulers.single())
-                        .subscribe { drinkLike ->
-                            state.postValue(DrinkItemLikeState(drink, drinkLike, false))
-                        }
+        if (networkUtil.isOnline()) {
+            drinksReq.requestDrink(drinkId)
+                .onStart { state.postValue(DrinkItemLikeState(null, null, true)) }
+                .onEach { drinks ->
+                    run {
+                        val drink = drinks.results[0]
+                        drinkLikeDao.getDrinkLike(drinkId)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(Schedulers.single())
+                            .subscribe { drinkLike ->
+                                state.postValue(DrinkItemLikeState(drink, drinkLike, false))
+                            }
 
+                    }
                 }
-            }
-            .launchIn(viewModelScope)
+                .launchIn(viewModelScope)
+        } else {
+            state.postValue(DrinkItemLikeState(null, null, false, isOnline = false))
+        }
+    }
+
+    fun onRefresh(drinkId: Int) {
+        init(drinkId)
     }
 
     fun onNoteChange(note: String) {

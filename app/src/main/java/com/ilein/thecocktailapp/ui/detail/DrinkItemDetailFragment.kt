@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import coil.load
@@ -39,7 +40,11 @@ class DrinkItemDetailFragment : Fragment() {
 
         val drinkId = args.drinkId
         vm.state.observe(requireActivity()) {state -> handleState(state) }
+
+        // TODO доделать отображение лайка
         vm.init(drinkId, false)
+
+        binding.swipeRefresh.setOnRefreshListener { vm.onRefresh(drinkId, false) }
 
         binding.ibSend.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
@@ -79,17 +84,22 @@ class DrinkItemDetailFragment : Fragment() {
     }
 
     private fun handleState(state: DrinkItemState) {
-        binding.lCardItem.visibility = if (state.loading) View.INVISIBLE else View.VISIBLE
-        binding.loading.visibility = if (state.loading) View.VISIBLE else View.INVISIBLE
+        binding.lCardItem.visibility = if (state.loading || !state.isOnline) View.INVISIBLE else View.VISIBLE
+        binding.swipeRefresh.isRefreshing = state.loading
 
-        state.item?.let {
-            binding.poster.contentDescription = it.drink.strDrinkThumb
-            binding.poster.load("${it.drink.strDrinkThumb}") {
-                transformations(RoundedCornersTransformation(16f))
+        if (state.isOnline) {
+            state.item?.let {
+                binding.poster.contentDescription = it.drink.strDrinkThumb
+                binding.poster.load("${it.drink.strDrinkThumb}") {
+                    transformations(RoundedCornersTransformation(16f))
+                }
+                binding.drinkTitle.text = it.drink.strDrink
+                binding.instructions.text = it.drink.strInstructions
+                binding.ingredients.text = it.drink.getIngredientsText()
             }
-            binding.drinkTitle.text = it.drink.strDrink
-            binding.instructions.text = it.drink.strInstructions
-            binding.ingredients.text = it.drink.getIngredientsText()
+        } else {
+            val toast = Toast.makeText(context, "No Internet Connection!!!", Toast.LENGTH_LONG)
+            toast.show()
         }
     }
 }

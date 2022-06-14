@@ -2,6 +2,4 @@
 <resources>
     <string name="app_name">TheCocktailApp</string>
 
-    <string name="ingredient_label">Ingredients</string>
-    <string name="instructions_label">Instructions</string>
 </resources>

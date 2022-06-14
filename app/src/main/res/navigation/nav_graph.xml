@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_mainFragment_to_likedDrinksFragment"
             app:destination="@id/likedDrinksFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchDrinksFragment"
@@ -52,4 +55,9 @@
             android:name="drinkId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.ilein.thecocktailapp.ui.map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 </navigation>

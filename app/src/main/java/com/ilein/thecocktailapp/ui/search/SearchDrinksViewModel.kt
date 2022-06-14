@@ -10,8 +10,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ilein.thecocktailapp.db.DrinkLikeDao
 import com.ilein.thecocktailapp.db.DrinkLikeEntity
-import com.ilein.thecocktailapp.network.Api
+import com.ilein.thecocktailapp.koin.networkModule
 import com.ilein.thecocktailapp.network.DrinksReq
+import com.ilein.thecocktailapp.network.NetworkUtil
 import com.ilein.thecocktailapp.network.model.Drink
 import com.ilein.thecocktailapp.network.model.Drinks
 import com.ilein.thecocktailapp.ui.state.DrinkData
@@ -20,14 +21,14 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
 class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
-                            private val drinksReq: DrinksReq) : ViewModel() {
+                            private val drinksReq: DrinksReq,
+                            private val networkUtils: NetworkUtil) : ViewModel() {
 
     private val _liveData: MutableLiveData<DrinksSearchState> = MutableLiveData(DrinksSearchState())
 
@@ -40,6 +41,10 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
     private val compositeDisposable = CompositeDisposable()
 
     init {
+        init()
+    }
+
+    private fun init() {
         compositeDisposable.add(
             drinkLikeDao.observeDrinkLike()
                 .subscribeOn(Schedulers.io())
@@ -53,13 +58,28 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
             .debounce(500)
             .flatMapLatest { query ->
                 if (query.isBlank()) flowOf(Drinks()) else
-                    drinksReq.requestDrinks(query)
-                        .onStart { updateState {
-                            it.copy(loading = true) } }
-                        .onEmpty { updateState {
-                            it.copy(loading = false) } }
-                        .onCompletion { updateState {
-                            it.copy(loading = false) } }
+                    if ( networkUtils.isOnline() ) {
+                        drinksReq.requestDrinks(query)
+                            .onStart {
+                                updateState {
+                                    it.copy(loading = true)
+                                }
+                            }
+                            .onEmpty {
+                                updateState {
+                                    it.copy(loading = false)
+                                }
+                            }
+                            .onCompletion {
+                                updateState {
+                                    it.copy(loading = false)
+                                }
+                            }
+                    } else {
+                        updateState {
+                            it.copy(loading = false, isOnline = false) }
+                        flowOf(Drinks())
+                    }
             }
             .flowOn(Dispatchers.IO)
             .onEach(::onResponse)
@@ -102,6 +122,10 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
         viewModelScope.launch {
             sharedFlow.emit(text)
         }
+    }
+
+    fun onRefresh() {
+        init()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

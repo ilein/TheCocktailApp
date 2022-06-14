@@ -23,9 +23,11 @@
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/drawable/ic_launcher_background.xml" value="0.13" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/fragment_drink_item_detail.xml" value="0.2" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/fragment_drink_like_item_detail.xml" value="0.264" />
+        <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/fragment_map.xml" value="0.140625" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/item_drink.xml" value="0.264" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/item_liked_drink.xml" value="0.264" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/liked_drinks_fragment.xml" value="0.19010416666666666" />
+        <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/main_activity.xml" value="0.140625" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/main_fragment.xml" value="0.2" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/layout/search_drinks_fragment.xml" value="0.2" />
         <entry key="..\:/AndroidHW/projects/TheCoctailApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.13" />

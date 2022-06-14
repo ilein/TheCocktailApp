@@ -6,18 +6,21 @@ import com.ilein.thecocktailapp.network.model.Drink
 data class DrinksSearchState (
     val input: String = "",
     val itemsMap: Map<Int, DrinkData> = emptyMap(),
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val isOnline: Boolean = true
 )
 
 data class DrinkItemState (
     val item: DrinkData?,
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val isOnline: Boolean = true
 )
 
 data class DrinkItemLikeState (
     val drink: Drink?,
     val drinkLike: DrinkLikeEntity?,
-    val loading: Boolean = false
+    val loading: Boolean = false,
+    val isOnline: Boolean = true
 )
 
 data class DrinkData (

@@ -29,6 +29,9 @@ class MainFragment : Fragment() {
         binding.btnGoToLikedDrinks.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_likedDrinksFragment)
         }
+        binding.btnGoToMap.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_mapFragment)
+        }
     }
 
 }

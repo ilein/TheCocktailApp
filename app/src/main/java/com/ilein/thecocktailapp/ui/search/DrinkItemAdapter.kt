@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.ilein.thecocktailapp.R
-import com.ilein.thecocktailapp.network.model.Drink
+import com.ilein.thecocktailapp.domain.model.Drink
 import com.ilein.thecocktailapp.ui.state.DrinkData
 import com.ilein.thecocktailapp.ui.utils.DiffCallback
 
@@ -43,9 +43,9 @@ internal class DrinkItemAdapter(private val onItemClick: (Drink) -> Unit,
             like.setOnCheckedChangeListener { _, isChecked ->
                 onLikeClick(item.drink, isChecked)
             }
-            title.text = item.drink.strDrink
+            title.text = item.drink.name
             like.isChecked = item.like ?: false
-            image.load("${item.drink.strDrinkThumb}/preview") {
+            image.load("${item.drink.image}/preview") {
                 transformations(RoundedCornersTransformation(16f))
             }
         }

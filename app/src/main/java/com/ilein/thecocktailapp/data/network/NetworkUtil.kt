@@ -1,4 +1,4 @@
-package com.ilein.thecocktailapp.network
+package com.ilein.thecocktailapp.data.network
 
 import android.content.Context
 import android.net.ConnectivityManager

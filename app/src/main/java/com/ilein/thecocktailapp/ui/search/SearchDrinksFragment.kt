@@ -1,14 +1,12 @@
 package com.ilein.thecocktailapp.ui.search
 
-import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ilein.thecocktailapp.databinding.SearchDrinksFragmentBinding
@@ -28,7 +26,6 @@ class SearchDrinksFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,7 +33,7 @@ class SearchDrinksFragment : Fragment() {
         //binding.loadingDrinks.visibility = View.INVISIBLE
 
         val drinksAdapter = DrinkItemAdapter ({
-            findNavController().navigate(SearchDrinksFragmentDirections.toDrinkDetailWithParam(it.idDrink))
+            findNavController().navigate(SearchDrinksFragmentDirections.toDrinkDetailWithParam(it.id))
         },
             { drink, isLike ->
                 vm.onLikeClick(drink, isLike)

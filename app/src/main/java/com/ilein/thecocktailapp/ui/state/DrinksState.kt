@@ -1,7 +1,6 @@
 package com.ilein.thecocktailapp.ui.state
 
-import com.ilein.thecocktailapp.db.DrinkLikeEntity
-import com.ilein.thecocktailapp.network.model.Drink
+import com.ilein.thecocktailapp.data.db.DrinkLikeEntity
 
 data class DrinksSearchState (
     val input: String = "",
@@ -17,14 +16,14 @@ data class DrinkItemState (
 )
 
 data class DrinkItemLikeState (
-    val drink: Drink?,
+    val drink: com.ilein.thecocktailapp.domain.model.Drink?,
     val drinkLike: DrinkLikeEntity?,
     val loading: Boolean = false,
     val isOnline: Boolean = true
 )
 
 data class DrinkData (
-    val drink: Drink,
+    val drink: com.ilein.thecocktailapp.domain.model.Drink,
     var like: Boolean?
 )
 

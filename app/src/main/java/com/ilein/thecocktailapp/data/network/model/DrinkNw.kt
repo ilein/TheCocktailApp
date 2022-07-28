@@ -1,10 +1,11 @@
-package com.ilein.thecocktailapp.network.model
+package com.ilein.thecocktailapp.data.network.model
 
+import com.ilein.thecocktailapp.domain.model.Drink
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Drink (
+data class DrinkNw (
     @SerialName("idDrink")
     val idDrink: Int,
     @SerialName("strDrink")
@@ -78,4 +79,7 @@ data class Drink (
         }
         return text
     }
+
+    fun toDomainModel(): Drink = Drink(idDrink, strDrink, strDrinkThumb, strInstructions, getIngredientsText())
+
 }

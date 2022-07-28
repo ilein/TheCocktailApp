@@ -1,4 +1,4 @@
-package com.ilein.thecocktailapp.db
+package com.ilein.thecocktailapp.data.db
 
 import android.content.Context
 import androidx.room.Database

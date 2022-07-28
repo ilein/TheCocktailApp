@@ -1,11 +1,11 @@
-package com.ilein.thecocktailapp.koin
+package com.ilein.thecocktailapp.data.koin
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.ilein.thecocktailapp.db.DrinkLikeDao
-import com.ilein.thecocktailapp.db.DrinkLikeDb
-import com.ilein.thecocktailapp.network.DrinksReq
-import com.ilein.thecocktailapp.network.NetworkUtil
+import com.ilein.thecocktailapp.data.db.DrinkLikeDao
+import com.ilein.thecocktailapp.data.db.DrinkLikeDb
+import com.ilein.thecocktailapp.data.network.DrinksReq
+import com.ilein.thecocktailapp.data.network.NetworkUtil
+import com.ilein.thecocktailapp.domain.usecase.GetDrinkUseCase
+import com.ilein.thecocktailapp.domain.usecase.GetDrinksUseCase
 import com.ilein.thecocktailapp.ui.detail.DrinkItemDetailViewModel
 import com.ilein.thecocktailapp.ui.detail.DrinkLikeItemDetailViewModel
 import com.ilein.thecocktailapp.ui.liked.LikedDrinksViewModel
@@ -20,9 +20,12 @@ val databaseModule = module {
     single { get<DrinkLikeDb>().drinkLikeDao() }
 }
 
-@RequiresApi(Build.VERSION_CODES.M)
 val networkModule = module {
     single { DrinksReq() }
+
+    single { GetDrinksUseCase(get() as DrinksReq) }
+
+    single { GetDrinkUseCase(get() as DrinksReq) }
 
     single { NetworkUtil(context = androidContext()) }
 
@@ -31,15 +34,15 @@ val networkModule = module {
 
 val vmModule = module {
     viewModel {
-        SearchDrinksViewModel(get() as DrinkLikeDao, get() as DrinksReq, get() as NetworkUtil)
+        SearchDrinksViewModel(get() as DrinkLikeDao, get() as NetworkUtil, get() as GetDrinksUseCase)
     }
     viewModel {
         LikedDrinksViewModel(get() as DrinkLikeDao)
     }
     viewModel {
-        DrinkItemDetailViewModel(get() as DrinkLikeDao, get() as DrinksReq, get() as NetworkUtil)
+        DrinkItemDetailViewModel(get() as NetworkUtil, get() as GetDrinkUseCase)
     }
     viewModel {
-        DrinkLikeItemDetailViewModel(get() as DrinkLikeDao, get() as DrinksReq, get() as NetworkUtil)
+        DrinkLikeItemDetailViewModel(get() as DrinkLikeDao, get() as NetworkUtil, get() as GetDrinkUseCase)
     }
 }

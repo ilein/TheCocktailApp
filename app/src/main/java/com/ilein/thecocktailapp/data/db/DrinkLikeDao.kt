@@ -1,4 +1,4 @@
-package com.ilein.thecocktailapp.db
+package com.ilein.thecocktailapp.data.db
 
 import androidx.room.Dao
 import androidx.room.Insert

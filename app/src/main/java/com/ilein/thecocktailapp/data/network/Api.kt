@@ -1,7 +1,7 @@
-package com.ilein.thecocktailapp.network
+package com.ilein.thecocktailapp.data.network
 
 import com.ilein.thecocktailapp.BuildConfig
-import com.ilein.thecocktailapp.network.model.Drinks
+import com.ilein.thecocktailapp.data.network.model.DrinksNw
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -14,7 +14,7 @@ class Api {
     private val drink = "api/json/${BuildConfig.API_VERSION}/${BuildConfig.API_KEY}/lookup.php"
 
 
-    private val ktorClient = HttpClient() {
+    private val ktorClient = HttpClient {
         install(Logging) {
             level = LogLevel.BODY
         }
@@ -28,14 +28,14 @@ class Api {
         }
     }
 
-    suspend fun getDrink(drinkId: Int): Drinks = ktorClient.use {
+    suspend fun getDrink(drinkId: Int): DrinksNw = ktorClient.use {
         it.get(
             host = baseUrl,
             path = buildPath(drink, mapOf(Pair("i", drinkId)))
         )
     }
 
-    suspend fun getDrinks(searchText: String): Drinks = ktorClient.use {
+    suspend fun getDrinks(searchText: String): DrinksNw = ktorClient.use {
         it.get(
             host = baseUrl,
             path = buildPath(drinks, mapOf(Pair("s", searchText)))

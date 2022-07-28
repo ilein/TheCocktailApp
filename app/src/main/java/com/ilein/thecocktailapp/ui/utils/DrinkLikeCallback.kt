@@ -1,7 +1,7 @@
 package com.ilein.thecocktailapp.ui.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import com.ilein.thecocktailapp.db.DrinkLikeEntity
+import com.ilein.thecocktailapp.data.db.DrinkLikeEntity
 
 class DiffLikeCallback(private val oldList: List<DrinkLikeEntity>, private val newList: List<DrinkLikeEntity>) : DiffUtil.Callback() {
 

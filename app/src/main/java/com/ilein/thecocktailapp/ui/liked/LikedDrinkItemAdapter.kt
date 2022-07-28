@@ -1,20 +1,18 @@
 package com.ilein.thecocktailapp.ui.liked
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.ilein.thecocktailapp.R
-import com.ilein.thecocktailapp.db.DrinkLikeEntity
+import com.ilein.thecocktailapp.data.db.DrinkLikeEntity
 import com.ilein.thecocktailapp.ui.utils.DiffLikeCallback
 import java.time.format.DateTimeFormatter
 
@@ -42,7 +40,6 @@ internal class LikedDrinkItemAdapter (private val onItemClick: (DrinkLikeEntity)
         private val updateDate: TextView = view.findViewById(R.id.tvUpdateDate)
         private val del: ImageButton = view.findViewById(R.id.ibDelete)
         @SuppressLint("SetTextI18n")
-        @RequiresApi(Build.VERSION_CODES.O)
         fun onBind(item: DrinkLikeEntity, onItemClick: (DrinkLikeEntity) -> Unit, onDelClick: (DrinkLikeEntity) -> Unit) {
             itemView.setOnClickListener { onItemClick(item) }
             del.setOnClickListener {
@@ -69,7 +66,6 @@ internal class LikedDrinkItemAdapter (private val onItemClick: (DrinkLikeEntity)
         return MyViewHolder(view)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.onBind(items[position], onItemClick, onDelClick)
     }

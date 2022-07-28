@@ -1,9 +1,9 @@
 package com.ilein.thecocktailapp
 
 import android.app.Application
-import com.ilein.thecocktailapp.koin.databaseModule
-import com.ilein.thecocktailapp.koin.networkModule
-import com.ilein.thecocktailapp.koin.vmModule
+import com.ilein.thecocktailapp.data.koin.databaseModule
+import com.ilein.thecocktailapp.data.koin.networkModule
+import com.ilein.thecocktailapp.data.koin.vmModule
 import dagger.hilt.android.HiltAndroidApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger

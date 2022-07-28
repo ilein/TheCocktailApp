@@ -3,9 +3,9 @@ package com.ilein.thecocktailapp.ui.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ilein.thecocktailapp.db.DrinkLikeDao
-import com.ilein.thecocktailapp.network.DrinksReq
-import com.ilein.thecocktailapp.network.NetworkUtil
+import com.ilein.thecocktailapp.data.db.DrinkLikeDao
+import com.ilein.thecocktailapp.data.network.NetworkUtil
+import com.ilein.thecocktailapp.domain.usecase.GetDrinkUseCase
 import com.ilein.thecocktailapp.ui.state.DrinkItemLikeState
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -14,20 +14,22 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 
 class DrinkLikeItemDetailViewModel(private val drinkLikeDao: DrinkLikeDao,
-                                   private val drinksReq: DrinksReq,
-                                   private val networkUtil: NetworkUtil
+                                   private val networkUtil: NetworkUtil,
+                                   private val getDrinkUseCase: GetDrinkUseCase
 ): ViewModel() {
     val state = MutableLiveData<DrinkItemLikeState>()
 
     private val compositeDisposable = CompositeDisposable()
 
-    fun init(drinkId: Int) {
+    suspend fun init(drinkId: Int) {
         if (networkUtil.isOnline()) {
-            drinksReq.requestDrink(drinkId)
+            //drinksReq.requestDrink(drinkId)
+            getDrinkUseCase.invoke(drinkId)
                 .onStart { state.postValue(DrinkItemLikeState(null, null, true)) }
                 .onEach { drinks ->
                     run {
-                        val drink = drinks.results[0]
+                        val drink = drinks.drinks.first()
+
                         drinkLikeDao.getDrinkLike(drinkId)
                             .subscribeOn(Schedulers.io())
                             .observeOn(Schedulers.single())
@@ -43,7 +45,7 @@ class DrinkLikeItemDetailViewModel(private val drinkLikeDao: DrinkLikeDao,
         }
     }
 
-    fun onRefresh(drinkId: Int) {
+    suspend fun onRefresh(drinkId: Int) {
         init(drinkId)
     }
 

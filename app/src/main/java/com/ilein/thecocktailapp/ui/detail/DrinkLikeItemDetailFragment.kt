@@ -15,6 +15,10 @@ import com.google.android.material.button.MaterialButton
 import com.ilein.thecocktailapp.R
 import com.ilein.thecocktailapp.databinding.FragmentDrinkLikeItemDetailBinding
 import com.ilein.thecocktailapp.ui.state.DrinkItemLikeState
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -37,14 +41,21 @@ class DrinkLikeItemDetailFragment : Fragment() {
         return binding.root
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val drinkId = args.drinkId
         vm.state.observe(requireActivity()) {state -> handleState(state) }
+        GlobalScope.launch (Dispatchers.IO) {
         vm.init(drinkId)
+        }
 
-        binding.swipeRefresh.setOnRefreshListener { vm.onRefresh(drinkId) }
+        binding.swipeRefresh.setOnRefreshListener {
+            GlobalScope.launch(Dispatchers.IO)
+            {
+                vm.onRefresh(drinkId)
+            }}
 
         binding.ibSendLike.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
@@ -90,13 +101,13 @@ class DrinkLikeItemDetailFragment : Fragment() {
 
         if (state.isOnline) {
             state.drink?.let {
-                binding.posterLike.contentDescription = state.drink.strDrinkThumb
-                binding.posterLike.load("${state.drink.strDrinkThumb}") {
+                binding.posterLike.contentDescription = state.drink.image
+                binding.posterLike.load("${state.drink.image}") {
                     transformations(RoundedCornersTransformation(16f))
                 }
-                binding.drinkTitleLike.text = state.drink.strDrink
-                binding.instructionsLike.text = state.drink.strInstructions
-                binding.ingredientsLike.text = state.drink.getIngredientsText()
+                binding.drinkTitleLike.text = state.drink.name
+                binding.instructionsLike.text = state.drink.instructions
+                binding.ingredientsLike.text = state.drink.ingredients
             }
         } else {
             val toast = Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG)

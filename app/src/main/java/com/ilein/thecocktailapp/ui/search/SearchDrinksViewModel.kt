@@ -8,27 +8,37 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ilein.thecocktailapp.db.DrinkLikeDao
-import com.ilein.thecocktailapp.db.DrinkLikeEntity
-import com.ilein.thecocktailapp.koin.networkModule
-import com.ilein.thecocktailapp.network.DrinksReq
-import com.ilein.thecocktailapp.network.NetworkUtil
-import com.ilein.thecocktailapp.network.model.Drink
-import com.ilein.thecocktailapp.network.model.Drinks
+import com.ilein.thecocktailapp.data.db.DrinkLikeDao
+import com.ilein.thecocktailapp.data.db.DrinkLikeEntity
+import com.ilein.thecocktailapp.data.network.NetworkUtil
+import com.ilein.thecocktailapp.domain.model.Drink
+import com.ilein.thecocktailapp.domain.model.Drinks
+import com.ilein.thecocktailapp.domain.usecase.GetDrinksUseCase
 import com.ilein.thecocktailapp.ui.state.DrinkData
 import com.ilein.thecocktailapp.ui.state.DrinksSearchState
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onEmpty
+import kotlinx.coroutines.flow.onStart
+
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
 class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
-                            private val drinksReq: DrinksReq,
-                            private val networkUtils: NetworkUtil) : ViewModel() {
+                            private val networkUtils: NetworkUtil,
+                            private val getDrinksUseCase: GetDrinksUseCase) : ViewModel() {
 
     private val _liveData: MutableLiveData<DrinksSearchState> = MutableLiveData(DrinksSearchState())
 
@@ -59,7 +69,7 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
             .flatMapLatest { query ->
                 if (query.isBlank()) flowOf(Drinks()) else
                     if ( networkUtils.isOnline() ) {
-                        drinksReq.requestDrinks(query)
+                        getDrinksUseCase.invoke(query)
                             .onStart {
                                 updateState {
                                     it.copy(loading = true)
@@ -82,7 +92,7 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
                     }
             }
             .flowOn(Dispatchers.IO)
-            .onEach(::onResponse)
+            .onEach (::onResponse)
             .launchIn(viewModelScope)
     }
 
@@ -98,10 +108,10 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
     private fun onResponse(drinks: Drinks) {
         updateState { it ->
             it.copy(
-                itemsMap = drinks.results.associate {
-                    it.idDrink to DrinkData(
+                itemsMap = drinks.drinks.associate {
+                    it.id to DrinkData(
                         it,
-                        drinkLikes.contains(it.idDrink)
+                        drinkLikes.contains(it.id)
                     )
                 },
                 loading = false
@@ -128,19 +138,18 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
         init()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun onLikeClick(drinkLike: Drink, isLike: Boolean) {
         if (!isLike) {
             compositeDisposable.add(
-                drinkLikeDao.deleteDrinkLike(drinkLike.idDrink)
+                drinkLikeDao.deleteDrinkLike(drinkLike.id)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.single())
                     .subscribe {
-                        drinkLikes.remove(drinkLike.idDrink)
+                        drinkLikes.remove(drinkLike.id)
                         updateState {
                             val copyVal = _liveData.value?.copy()
                             if (copyVal != null) {
-                                copyVal.itemsMap[drinkLike.idDrink]?.like = false
+                                copyVal.itemsMap[drinkLike.id]?.like = false
                             }
                             return@updateState copyVal!!
                         }
@@ -151,9 +160,9 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
             compositeDisposable.add(
                 drinkLikeDao.insertDrinkLike(
                     DrinkLikeEntity(
-                        id = drinkLike.idDrink,
-                        name = drinkLike.strDrink,
-                        image = drinkLike.strDrinkThumb,
+                        id = drinkLike.id,
+                        name = drinkLike.name,
+                        image = drinkLike.image,
                         createDate = LocalDateTime.now(),
                         note = null
                     )
@@ -161,11 +170,11 @@ class SearchDrinksViewModel(private val drinkLikeDao: DrinkLikeDao,
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.single())
                     .subscribe {
-                        if (drinkLike.idDrink !in drinkLikes) {drinkLikes.add(drinkLike.idDrink)}
+                        if (drinkLike.id !in drinkLikes) {drinkLikes.add(drinkLike.id)}
                         updateState {
                             val copyVal = _liveData.value?.copy()
                             if (copyVal != null) {
-                                copyVal.itemsMap[drinkLike.idDrink]?.like = true
+                                copyVal.itemsMap[drinkLike.id]?.like = true
                             }
                             return@updateState copyVal!!
                         }

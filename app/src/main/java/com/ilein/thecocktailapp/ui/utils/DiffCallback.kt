@@ -10,7 +10,7 @@ class DiffCallback(private val oldList: List<DrinkData>, private val newList: Li
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].drink.idDrink == newList[newItemPosition].drink.idDrink
+        oldList[oldItemPosition].drink.id == newList[newItemPosition].drink.id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
         oldList[oldItemPosition] == newList[newItemPosition]

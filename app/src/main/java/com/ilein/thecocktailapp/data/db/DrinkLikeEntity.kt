@@ -1,8 +1,9 @@
-package com.ilein.thecocktailapp.db
+package com.ilein.thecocktailapp.data.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ilein.thecocktailapp.domain.model.DrinkLike
 import java.time.LocalDateTime
 
 @Entity(tableName = DrinkLikeDb.DRINK_LIKE_TABLE)
@@ -31,4 +32,6 @@ data class DrinkLikeEntity (
         const val COLUMN_CREATE_DATE = "update_date"
         const val COLUMN_NOTE = "note"
     }
+
+    fun toDomainModel(): DrinkLike = DrinkLike(id, name, image, createDate, note)
 }

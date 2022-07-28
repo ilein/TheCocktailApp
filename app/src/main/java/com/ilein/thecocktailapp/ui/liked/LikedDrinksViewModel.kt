@@ -3,8 +3,8 @@ package com.ilein.thecocktailapp.ui.liked
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ilein.thecocktailapp.db.DrinkLikeDao
-import com.ilein.thecocktailapp.db.DrinkLikeEntity
+import com.ilein.thecocktailapp.data.db.DrinkLikeDao
+import com.ilein.thecocktailapp.data.db.DrinkLikeEntity
 import com.ilein.thecocktailapp.ui.state.DrinksLikeState
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers

@@ -6,7 +6,7 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.ilein.thecocktailapp.ui.main.MainFragment"
+        android:name="com.ilein.thecocktailapp.presentation.ui.main.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchDrinksFragment"
-        android:name="com.ilein.thecocktailapp.ui.search.SearchDrinksFragment"
+        android:name="com.ilein.thecocktailapp.presentation.ui.search.SearchDrinksFragment"
         android:label="search_drinks_fragment"
         tools:layout="@layout/search_drinks_fragment" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/drinkItemDetailFragment"
-        android:name="com.ilein.thecocktailapp.ui.detail.DrinkItemDetailFragment"
+        android:name="com.ilein.thecocktailapp.presentation.ui.detail.DrinkItemDetailFragment"
         android:label="fragment_drink_item_detail"
         tools:layout="@layout/fragment_drink_item_detail" >
         <argument
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/likedDrinksFragment"
-        android:name="com.ilein.thecocktailapp.ui.liked.LikedDrinksFragment"
+        android:name="com.ilein.thecocktailapp.presentation.ui.liked.LikedDrinksFragment"
         android:label="liked_drinks_fragment"
         tools:layout="@layout/liked_drinks_fragment" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/drinkLikeItemDetailFragment3"
-        android:name="com.ilein.thecocktailapp.ui.detail.DrinkLikeItemDetailFragment"
+        android:name="com.ilein.thecocktailapp.presentation.ui.detail.DrinkLikeItemDetailFragment"
         android:label="fragment_drink_like_item_detail"
         tools:layout="@layout/fragment_drink_like_item_detail" >
         <argument
@@ -57,7 +57,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.ilein.thecocktailapp.ui.map.MapFragment"
+        android:name="com.ilein.thecocktailapp.presentation.ui.map.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
 </navigation>

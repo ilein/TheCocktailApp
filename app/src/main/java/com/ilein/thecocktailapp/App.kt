@@ -1,15 +1,14 @@
 package com.ilein.thecocktailapp
 
 import android.app.Application
-import com.ilein.thecocktailapp.koin.databaseModule
-import com.ilein.thecocktailapp.koin.networkModule
-import com.ilein.thecocktailapp.koin.vmModule
-import dagger.hilt.android.HiltAndroidApp
+import com.ilein.thecocktailapp.di.databaseModule
+import com.ilein.thecocktailapp.di.networkModule
+import com.ilein.thecocktailapp.di.useCaseModule
+import com.ilein.thecocktailapp.di.vmModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
-@HiltAndroidApp
 class App: Application() {
 
     override fun onCreate() {
@@ -18,7 +17,7 @@ class App: Application() {
         startKoin(){
             androidLogger()
             androidContext(this@App)
-            modules(databaseModule, networkModule, vmModule)
+            modules(databaseModule, networkModule, useCaseModule, vmModule)
         }
     }
 }
